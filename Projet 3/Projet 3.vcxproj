@@ -147,10 +147,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CMatrice.cpp" />
+    <ClCompile Include="CFichier.cpp" />
     <ClCompile Include="Projet 3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CFichier.h" />
     <ClInclude Include="CMatrice.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
