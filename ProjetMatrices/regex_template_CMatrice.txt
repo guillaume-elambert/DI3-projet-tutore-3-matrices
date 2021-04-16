@@ -1,0 +1,6 @@
+TypeMatrice\s*=\s*(double)\s*
+NBLignes\s*=\s*([0-9]+)\s*
+NBColonnes\s*=\s*([0-9]+)\s*
+Matrice\s*=\s*\[\s*
+initializing_content
+\s*\]\s*

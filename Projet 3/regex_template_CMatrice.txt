@@ -1,6 +1,0 @@
-TypeMatrice=(.+)
-NBLignes=([0-9]+)
-NBColonnes=([0-9]+)
-Matrice=\[
-initializing_content
-\]
