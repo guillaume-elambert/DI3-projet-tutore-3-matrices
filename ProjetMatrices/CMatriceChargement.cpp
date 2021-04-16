@@ -149,7 +149,8 @@ CMatrice<double> &CMatriceChargement::MACConversionChaineMatrice(const char* sCh
 
 				MATNouvelleMatrice = new CMatrice<double>(iNbLignes, iNbColonnes);
 
-				int iCurrentRow = 0, iCurrentCol, iLineLength;
+				int iCurrentRow = 0, iCurrentCol;
+				size_t iLineLength;
 
 				char *sColMat = (char *)malloc(sizeof(char)), *sNextColMat;
 				const char *sDelimSpace = " ";

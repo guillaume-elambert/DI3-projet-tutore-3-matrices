@@ -122,7 +122,7 @@ int main(int argc, char * argv[])
 
 	cout << "début de l'alogorithme demandé" << endl;
 
-	if (argc > 1) {
+	/*if (argc > 1) {
 		double dValeur = 0;
 		CMatrice<double> *pMATTableauMatrice = new CMatrice<double>[argc];
 		CMatrice<double> MATtmp;
@@ -170,13 +170,13 @@ int main(int argc, char * argv[])
 
 		/*for (iBoucle = 0; iBoucle < argc; ++iBoucle) {
 			delete pMATTableauMatrice[iBoucle];
-		}*/
+		}
 		delete[] pMATTableauMatrice;
 	}
 	else if (argc == 0)
 		cout << "Pas d'arguments.";
 	else
-		cout << "Dépassement de la taille maximale de fichier lisible.";
+		cout << "Dépassement de la taille maximale de fichier lisible.";*/
 
 	try {
 		cout << "Matrice1 * 5 :" << endl;
@@ -220,7 +220,12 @@ int main(int argc, char * argv[])
 
 	try {
 		cout << "Matrice1 * Matrice2 :" << endl;
-		printf("%s\n", CMatriceOperation<double>::MOPMultiplierMatrice(MATTableau1, MATTableau2).MATToString());
+
+		printf("%s\n", (MATTableau1 * MATTableau2).MATToString());
+		MATTableau1 *= MATTableau2;
+		printf("%s\n", (MATTableau1).MATToString());
+		//printf("%s\n", (MATTableau2 * MATTableau1).MATToString());
+		printf("Verif : \n%s\n", CMatriceOperation<double>::MOPMultiplierMatrice(MATTableau1, MATTableau2).MATToString());
 		cout << endl;
 	}
 	catch (CException EXCLevee)
@@ -240,6 +245,10 @@ int main(int argc, char * argv[])
 
 	try {
 		cout << "Matrice1 + Matrice3 :" << endl;
+		MATTableau1 = CMatrice<double>(3, 4, ppdTableau1);
+		printf("%s\n", (MATTableau1 + MATTableau3).MATToString());
+		MATTableau1 += MATTableau3;
+		printf("+=\n%s\n", MATTableau1.MATToString());
 		printf("%s\n", CMatriceOperation<double>::MOPAdditionnerMatrice(MATTableau1, MATTableau3).MATToString());
 		cout << endl;
 	}

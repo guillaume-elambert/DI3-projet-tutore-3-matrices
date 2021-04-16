@@ -29,18 +29,7 @@ CMatrice<MATType>::CMatrice()
 template <class MATType>
 CMatrice<MATType>::CMatrice(CMatrice<MATType> & MATParam)
 {
-	uMATNBLignes = MATParam.uMATNBLignes;
-	uMATNBColonnes = MATParam.uMATNBColonnes;
-
-	MATMatrice = (MATType **)malloc(sizeof(MATType *) * uMATNBLignes);
-	for (unsigned int uLigneCourante = 0; uLigneCourante < uMATNBLignes; uLigneCourante++)
-	{
-		MATMatrice[uLigneCourante] = (MATType *)malloc(sizeof(MATType) * uMATNBColonnes);
-		for (unsigned int uColonneCourante = 0; uColonneCourante < uMATNBColonnes; uColonneCourante++)
-		{
-			MATMatrice[uLigneCourante][uColonneCourante] = MATParam.MATMatrice[uLigneCourante][uColonneCourante];
-		}
-	}
+	MATCopyContentFrom(MATParam);
 }
 
 template <class MATType>
@@ -108,6 +97,23 @@ CMatrice<MATType>::~CMatrice()
 	free(MATMatrice);
 }
 
+template<class MATType>
+void CMatrice<MATType>::MATCopyContentFrom(const CMatrice<MATType>& MATParam)
+{
+	uMATNBLignes = MATParam.uMATNBLignes;
+	uMATNBColonnes = MATParam.uMATNBColonnes;
+
+	MATMatrice = (MATType **)malloc(sizeof(MATType *) * uMATNBLignes);
+	for (unsigned int uLigneCourante = 0; uLigneCourante < uMATNBLignes; uLigneCourante++)
+	{
+		MATMatrice[uLigneCourante] = (MATType *)malloc(sizeof(MATType) * uMATNBColonnes);
+		for (unsigned int uColonneCourante = 0; uColonneCourante < uMATNBColonnes; uColonneCourante++)
+		{
+			MATMatrice[uLigneCourante][uColonneCourante] = MATParam.MATMatrice[uLigneCourante][uColonneCourante];
+		}
+	}
+}
+
 template <class MATType>
 unsigned int CMatrice<MATType>::MATLireNBLignes() {
 	return(uMATNBLignes);
@@ -168,7 +174,7 @@ char * CMatrice<MATType>::MATToString(void)
 
 	for (int i = 0; i < this->uMATNBLignes; ++i) {
 		for (int j = 0; j < this->uMATNBColonnes; ++j) {
-			buffer << this->MATMatrice[i][j] << " ";
+			buffer << this->MATMatrice[i][j] << "\t";
 		}
 		buffer << "\n";
 	}
@@ -193,6 +199,189 @@ void CMatrice<MATType>::operator=(MATType & MATMatriceParam)
 	free(MATMatrice);
 
 	CMatrice(MATMatriceParam);
+}
+
+template <class MATType>
+CMatrice<MATType>& CMatrice<MATType>::operator=(const CMatrice<MATType>& MATParam)
+{
+	if (&MATParam == this)
+		return *this;
+
+	this->MATCopyContentFrom(MATParam);
+	return *this;
+}
+
+/*!
+ * Méthode qui permet de gérer l'addition d'une matrice par une autre
+ *
+ * \param MATParam Matrice à additioner
+ * \return Le résultat de l'addition
+ */
+template <class MATType>
+CMatrice<MATType> CMatrice<MATType>::operator+(const CMatrice<MATType>& MATParam)
+{
+	CMatrice<MATType>* newMatrice = new CMatrice<MATType>();
+
+	//On entre que si les dimensions sont les mêmes
+	if (this->uMATNBColonnes == MATParam.uMATNBColonnes
+		&&	this->uMATNBLignes == MATParam.uMATNBLignes
+		) {
+
+		newMatrice = new CMatrice<MATType>(this->uMATNBLignes, this->uMATNBColonnes);
+
+		for (int i = 0; i < this->uMATNBLignes; ++i) {
+			for (int j = 0; j < this->uMATNBColonnes; ++j) {
+				newMatrice->MATMatrice[i][j] = this->MATMatrice[i][j] + MATParam.MATMatrice[i][j];
+			}
+		}
+	}
+	else {
+		throw "operator+ : Les deux matrices doivent avoir le même nombre de lignes et le même nombre de colonnes.";
+	}
+
+	return *newMatrice;
+}
+
+
+/*!
+ * Méthode qui permet de gérer la soustraction d'une matrice par une autre
+ *
+ * \param MATParam Matrice à soustraire
+ * \return Résultat de la soustraction
+ */
+template <class MATType>
+CMatrice<MATType> CMatrice<MATType>::operator-(const CMatrice<MATType>& MATParam)
+{
+	CMatrice<MATType>* newMatrice();
+
+	//On entre que si les dimensions sont les mêmes
+	if (this->uMATNBColonnes == MATParam.uMATNBColonnes
+		&&	this->uMATNBLignes == MATParam.uMATNBLignes
+		) {
+
+		newMatrice = new CMatrice<MATType>(this->uMATNBLignes, this->uMATNBColonnes);
+
+		for (int i = 0; i < this->uMATNBLignes; ++i) {
+			for (int j = 0; j < this->uMATNBColonnes; ++j) {
+				newMatrice->MATMatrice[i][j] = this->MATMatrice[i][j] - MATParam[i][j];
+			}
+		}
+	}
+	else {
+		throw "operator- : Les deux matrices doivent avoir le même nombre de lignes et le même nombre de colonnes.";
+	}
+
+	return *newMatrice;
+}
+
+
+/*!
+ * Méthode qui permet de gérer la multiplication d'une matrice par une autre
+ *
+ * \param MATParam Matrice à multiplier
+ * \return Résultat de la multiplication
+ */
+template <class MATType>
+CMatrice<MATType> CMatrice<MATType>::operator*(const CMatrice<MATType>& MATParam)
+{
+
+	/* On peut seulement multiplier deux matrices si elles ont au moins un
+	MEME attribut oppose (ligne et colonne) */
+	if (this->uMATNBColonnes != MATParam.uMATNBLignes) {
+		throw "operator* : Multplication impossible de deux matrices: le nombre de lignes de la matrice 1 est different du nombre de colonnes de la matrice 2";
+	}
+
+
+	CMatrice<MATType>* newMatrice = new CMatrice<MATType>(this->uMATNBLignes, MATParam.uMATNBColonnes);
+	MATType tmp;
+
+	for (int i = 0; i < this->uMATNBLignes; i++) {
+		for (int j = 0; j < MATParam.uMATNBColonnes; j++) {
+
+			for (int k = 0; k < this->uMATNBColonnes; k++) {
+
+				tmp = this->MATMatrice[i][k] * MATParam.MATMatrice[k][j];
+				//On fait newMatrice[i][j] += tmp uniquement si newMatrice[i][j] a déjà pris une valeur
+				newMatrice->MATMatrice[i][j] = (k == 0) ? tmp : newMatrice->MATMatrice[i][j] + tmp;
+
+			}
+		}
+	}
+
+	return *newMatrice;
+}
+
+
+/*!
+ * Operateur permettant la multiplication cumulée entre 2 matrices
+ *
+ * \param MATParam Matrice à multiplier
+ * \return Résultat de la multiplication
+ */
+template <class MATType>
+CMatrice<MATType>& CMatrice<MATType>::operator*=(const CMatrice<MATType>& MATParam)
+{
+	(*this) = (*this) * MATParam;
+	return *this;
+}
+
+
+/*!
+ * Operateur permettant l'addition cumulée entre 2 matrices
+ *
+ * \param MATParam Matrice à additionner
+ * \return Résultat de l'addition
+ */
+template <class MATType>
+CMatrice<MATType>& CMatrice<MATType>::operator+=(const CMatrice<MATType>& MATParam)
+{
+	(*this) = (*this) + MATParam;
+	return *this;
+}
+
+
+/*!
+ * Méthode qui permet de gérer la multiplication d'une matrice par un entier ou un réel
+ *
+ * \param MATMatrice Variable à multiplier
+ * \return Résultat de la multiplication
+ */
+template <class MATType>
+CMatrice<MATType> CMatrice<MATType>::operator*(const MATType MATMScalaire)
+{
+	CMatrice<MATType> *newMatrice = new CMatrice<MATType>(this->uMATNBLignes, this->uMATNBColonnes);
+
+	for (int i = 0; i < this->uMATNBLignes; ++i) {
+		for (int j = 0; j < this->uMATNBColonnes; ++j) {
+			newMatrice->MATMatrice[i][j] = this->MATMatrice[i][j] * MATMatrice;
+		}
+	}
+
+	return *newMatrice;
+}
+
+
+/*!
+ * Méthode qui permet de gérer la division d'une matrice par un entier ou un réel
+ *
+ */
+template <class MATType>
+CMatrice<MATType> CMatrice<MATType>::operator/(const MATType MATMScalaire)
+{
+	return CMatrice<MATType>();
+}
+
+
+/*!
+ * Opérateur qui retourne la ligne de la matrice d'indice iIndice
+ *
+ * \param iIndice L'indice de la ligne souhaitée
+ * \return Le ligne de la matrice
+ */
+template <class MATType>
+inline MATType* CMatrice<MATType>::operator[](int iIndice)
+{
+	return this->MATMatrice[iIndice];
 }
 
 #endif

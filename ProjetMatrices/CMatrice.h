@@ -84,6 +84,18 @@ public:
 	*************************************************/
 	~CMatrice<MATType>();
 
+	/*************************************************
+	*****NOM : MATCopyContentFrom
+	**************************************************
+	*****Méthode
+	**************************************************
+	*****Entrée : CMatrice<type> MATParam (par référence).
+	*****Nécessite : /
+	*****Sortie : /
+	*****Entraîne : Création d'un objet CMatrice de taille uNBColonne*uNBLigne et d'argument MATMAtrice entièrement remplie par valeur.
+	*************************************************/
+	void MATCopyContentFrom(const CMatrice<MATType>& MATParam);
+
 	//Accesseurs
 
 	/*************************************************
@@ -159,6 +171,21 @@ public:
 	*****Entraîne : /
 	*************************************************/
 	void operator=(MATType & MATMatrice);
+
+	//Operations matricielles
+	CMatrice<MATType>& operator=(const CMatrice<MATType>& MATMatrice);
+	CMatrice<MATType> operator+(const CMatrice<MATType>& MATMatrice);
+	CMatrice<MATType> operator-(const CMatrice<MATType>& MATMatrice);
+	CMatrice<MATType> operator*(const CMatrice<MATType>& MATMatrice);
+
+	CMatrice<MATType>& operator*=(const CMatrice<MATType>& MATMatrice);
+	CMatrice<MATType>& operator+=(const CMatrice<MATType>& MATMatrice);
+
+
+	CMatrice<MATType> operator*(const MATType MATMScalaire);
+	CMatrice<MATType> operator/(const MATType MATMScalaire);
+
+	MATType* operator[](int iIndice);
 };
 
 #include "CMatrice.cpp"
