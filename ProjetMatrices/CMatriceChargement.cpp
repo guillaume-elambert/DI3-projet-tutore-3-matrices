@@ -4,33 +4,27 @@
 #include "CParser.h"
 #include <regex>
 
-/*************************************************
-*****NOM : MACConversionChaineMatrice
-**************************************************
-*****Charge une matrice depuis un fichier
-**************************************************
-*****Entrée : sChemin, le chemin du fichier.
-*****Nécessite : sChemin != null
-*****Sortie : Un objet CMatrice initialisé à partir d'un fichier.
-*****Entraine : /
-*************************************************/
+/*!
+ * Charge une matrice depuis un fichier
+ * 
+ * \param sChemin Le chemin vers le fichier
+ * \pre sChemin != null
+ * \return Un objet CMatrice initialisé à partir d'un fichier.
+ */
 CMatrice<double>& CMatriceChargement::MACChargerMatriceFichier(const char* sChemin)
 {
 	CParser PARParser(sChemin);
 	CMatrice<double> & MATNouvelleMatrice = MACConversionChaineMatrice(PARParser.PARLire());
 	return MATNouvelleMatrice;
 }
-
-/*************************************************
-*****NOM : MACConversionChaineMatrice
-**************************************************
-*****Charge une matrice depuis une chaine
-**************************************************
-*****Entrée : sChaine, la chaine à convertir
-*****Nécessite : sChaine != null
-*****Sortie : Un objet CMatrice initialisé à partir d'une chaine.
-*****Entraine : /
-*************************************************/
+ 
+/*!
+ * Charge une matrice depuis une chaine
+ * 
+ * \param sChaine La chaine à convertir en matrice
+ * \pre sChaine != null
+ * \return Un objet CMatrice initialisé à partir de la chaîne de caractères.
+ */
 CMatrice<double> &CMatriceChargement::MACConversionChaineMatrice(const char* sChaine)
 {
 	if (!sChaine) {
@@ -63,13 +57,14 @@ CMatrice<double> &CMatriceChargement::MACConversionChaineMatrice(const char* sCh
 
 		char *sTypeMatrice;
 		int iNbLignes, iNbColonnes;
+		std::regex initilizationRegex = std::regex("initializing_content");
 
 		//On parcourt tous les éléments de currentFile (séparés par espace, tab, fin de ligne)
 		while (bIsGoodExec && sLineParam && sLineRegex)
 		{
 
 			//On vérifie si l'élément parcouru correspond à la zone d'initialisation de la matrice
-			inInitialization = regex_match(sLineRegex, std::regex("initializing_content"));
+			inInitialization = regex_match(sLineRegex, initilizationRegex);
 
 			//Entrée : Nous ne parcourons pas la zone d'initialisation de la matrice
 			if (!inInitialization) {
@@ -80,13 +75,6 @@ CMatrice<double> &CMatriceChargement::MACConversionChaineMatrice(const char* sCh
 					//On récupère la chaîne de caractère issue de premier groupe donné par l'expression régulière
 					//(on met a null si pas de 1er groupe)
 					sRegexResult = cmMatch.size() > 1 ? (char *)cmMatch[1].first : nullptr;
-
-					//Entrée : On est sur les lignes où on attend de trouver un paramètre (càd toutes les lignes sauf celles indiquant le début et la fin de l'initialisation)
-					//		ET On ne l'a pas trouvé
-					/*if (sLineParam != "]" && iCurrentLine != 3 && sRegexResult == nullptr) {
-						std::printf("Erreur dans la chaîne de caractères");
-						bIsGoodExec = false;
-					}*/
 
 					switch (iCurrentLine)
 					{
@@ -118,6 +106,7 @@ CMatrice<double> &CMatriceChargement::MACConversionChaineMatrice(const char* sCh
 
 					//On passe à la ligne suivante
 					sLineParam = strtok_s(NULL, sDelimBreakLine, &sNextLineParam);
+					sLineRegex = strtok_s(NULL, sDelimBreakLine, &sNextLineRegex);
 					++iCurrentLine;
 				}
 				else {
@@ -147,6 +136,9 @@ CMatrice<double> &CMatriceChargement::MACConversionChaineMatrice(const char* sCh
 			}
 			else {
 
+				sLineRegex = strtok_s(NULL, sDelimBreakLine, &sNextLineRegex);
+				std::regex lastRegexLine = std::regex(sLineRegex);
+
 				MATNouvelleMatrice = new CMatrice<double>(iNbLignes, iNbColonnes);
 
 				int iCurrentRow = 0, iCurrentCol;
@@ -156,7 +148,7 @@ CMatrice<double> &CMatriceChargement::MACConversionChaineMatrice(const char* sCh
 				const char *sDelimSpace = " ";
 
 				//On on parcourt toutes les lignes du fichier correspondant à l'initialisation de la matrice
-				while (bIsGoodExec && iCurrentRow < iNbLignes && sLineParam) {
+				while (bIsGoodExec && iCurrentRow < iNbLignes && sLineParam && !regex_match(sLineParam, lastRegexLine)) {
 
 					iCurrentCol = 0;
 					iLineLength = strlen(sLineParam);
@@ -193,8 +185,6 @@ CMatrice<double> &CMatriceChargement::MACConversionChaineMatrice(const char* sCh
 
 				--iCurrentLine;
 			}
-
-			sLineRegex = strtok_s(NULL, sDelimBreakLine, &sNextLineRegex);
 
 		}
 	} else {

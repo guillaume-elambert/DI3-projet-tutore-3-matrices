@@ -17,78 +17,52 @@ private:
 	unsigned int uTailleBuffer;
 	unsigned int uMaxTailleBuffer;
 
-	/*************************************************
-	*****NOM : CParser
-	**************************************************
-	*****Constructeur par défaut.
-	**************************************************
-	*****Entrée : /
-	*****Nécessite : Ne pas utiliser ce constructeur.
-	*****Sortie : /
-	*****Entraîne : Création d'un objet CParser n'ayant lu aucun fichier.
-	*************************************************/
+	/*!
+	 * Constructeur par défaut
+	 *
+	 */
 	CParser();
 
 public:
 
-	/*************************************************
-	*****NOM : CParser
-	**************************************************
-	*****Constructeur de confort.
-	**************************************************
-	*****Entrée : le chemin du fichier sPath.
-	*****Nécessite : Les caractères \ devant être échappé, il est nécessaire de les doubler.
-	*****Sortie : /
-	*****Entraîne : Création d'un objet CParser ayant lu le fichier se trouvant en sPath.
-	*************************************************/
+	/*!
+	 * Constructeur de confort
+	 * Création d'un objet CParser ayant lu le fichier se trouvant en sChemin.
+	 *
+	 * \param sChemin Chemin vers le fichier souhaité
+	 * \pre sChemin != NULL && le fichier existe
+	 */
 	CParser(const char * sPath);
 
-	/*************************************************
-	*****NOM : ~CParser
-	**************************************************
-	*****Destructeur par défaut.
-	**************************************************
-	*****Entrée : /
-	*****Nécessite : /
-	*****Sortie : /
-	*****Entraîne : L'objet est prêt à être désalloué.
-	*************************************************/
+
+	/*!
+	 * Destructeur par défaut
+	 *
+	*/
 	~CParser();
 
-	/*************************************************
-	*****NOM : PARLire
-	**************************************************
-	*****Accesseur en lecture de sBuff.
-	**************************************************
-	*****Entrée : /
-	*****Nécessite : /
-	*****Sortie : sBuff
-	*****Entraîne : /
-	*************************************************/
+	
+	/*!
+	 * Accesseur en lecture de sBuffer
+	 *
+	 * \return La chaîne sBuffer correspondant au contenu du fichier
+	 */
 	char * PARLire();
 
-	/*************************************************
-	*****NOM : PARLireFichier
-	**************************************************
-	*****Lis le contenue d'un fichier.
-	**************************************************
-	*****Entrée : le chemin du fichier sPath.
-	*****Nécessite : Les caractères \ devant être échappé, il est nécessaire de les doubler.
-	*****Sortie : /
-	*****Entraîne : /
-	*************************************************/
+	
+	/*!
+	 * Méthode que lit le contenu d'un fichier
+	 *
+	 * \param sChemin Le chemin vers le fichier souhaité
+	 * \pre sChemin != NULL && le fichier existe
+	 */
 	void PARLireFichier(const char * sPath);
 
-	/*************************************************
-	*****NOM : PARVider
-	**************************************************
-	*****Vide le buffer.
-	**************************************************
-	*****Entrée : /
-	*****Nécessite : /
-	*****Sortie : /
-	*****Entraîne : /
-	*************************************************/
+
+	/*!
+	 * Méthode qui désalloue sBuffer
+	 *
+	*/
 	void PARVider();
 };
 

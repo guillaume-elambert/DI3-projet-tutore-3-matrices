@@ -158,7 +158,6 @@
     <ClCompile Include="CException.cpp" />
     <ClCompile Include="CMatrice.cpp" />
     <ClCompile Include="CMatriceChargement.cpp" />
-    <ClCompile Include="CMatriceOperation.cpp" />
     <ClCompile Include="CParser.cpp" />
     <ClCompile Include="ProjetMatrices.cpp" />
   </ItemGroup>
@@ -166,7 +165,6 @@
     <ClInclude Include="CException.h" />
     <ClInclude Include="CMatrice.h" />
     <ClInclude Include="CMatriceChargement.h" />
-    <ClInclude Include="CMatriceOperation.h" />
     <ClInclude Include="CParser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

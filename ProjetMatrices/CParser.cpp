@@ -1,11 +1,23 @@
 #include "CParser.h"
 
+/*!
+ * Constructeur par défaut
+ *
+ * \pre NE PAS UTILISER CE CONSTRUCTEUR
+ */
 CParser::CParser()
 {
 	throw(CException(Utilisation_Constructeur_Interdite));
 }
 
 
+/*!
+ * Constructeur de confort
+ * Création d'un objet CParser ayant lu le fichier se trouvant en sChemin.
+ * 
+ * \param sChemin Chemin vers le fichier souhaité
+ * \pre sChemin != NULL && le fichier existe
+ */
 CParser::CParser(const char * sChemin)
 {
 	if (sChemin == nullptr)
@@ -43,16 +55,35 @@ CParser::CParser(const char * sChemin)
 	FILfichier.close();*/
 }
 
+
+/*!
+ * Destructeur par défaut
+ * 
+ */
 CParser::~CParser()
 {
 	free(sBuffer);
 }
 
+
+/*!
+ * Accesseur en lecture de sBuffer
+ * 
+ * \return La chaîne sBuffer correspondant au contenu du fichier
+ */
 char * CParser::PARLire()
 {
 	return sBuffer;
 }
 
+
+
+/*!
+ * Méthode que lit le contenu d'un fichier
+ * 
+ * \param sChemin Le chemin vers le fichier souhaité
+ * \pre sChemin != NULL && le fichier existe
+ */
 void CParser::PARLireFichier(const char * sChemin)
 {
 	this->PARVider();
@@ -81,10 +112,14 @@ void CParser::PARLireFichier(const char * sChemin)
 	FILfichier.close();
 }
 
+/*!
+ * Méthode qui désalloue sBuffer
+ * 
+ */
 void CParser::PARVider()
 {
 	free(sBuffer);
 	sBuffer = (char *)malloc(sizeof(char)),
-		uTailleBuffer = 0;
+	uTailleBuffer = 0;
 	uMaxTailleBuffer = 1;
 }

@@ -13,83 +13,51 @@ class CException
 private:
 	unsigned int uEXCErreur;
 
-	//Constructeurs
 public:
 
-	/*************************************************
-	*****NOM : CException
-	**************************************************
-	*****Constructeur par défaut
-	**************************************************
-	*****Entrée : /
-	*****Nécessite : /
-	*****Sortie : /
-	*****Entraine : /
-	*************************************************/
-	CException();
 
-	/*************************************************
-	*****NOM : CException
-	**************************************************
-	*****Constructeur de confort
-	**************************************************
-	*****Entrée : unsiged int uErreur le code d'erreur.
-	*****Nécessite : /
-	*****Sortie : /
-	*****Entraine : /
-	*************************************************/
+	/*!
+	 * Constructeur par défaut
+	 * 
+	 */
+	CException();
+	
+	/*!
+	 * Constructeur de confort
+	 * 
+	 * \param uErreur Code de l'erreur à attribuer à uEXCErreur
+	 */
 	CException(unsigned int uErreur);
 
-	//Destructeurs
 
-	/*************************************************
-	*****NOM : ~CException
-	**************************************************
-	*****Destructeur par défaut
-	**************************************************
-	*****Entrée : /
-	*****Nécessite : /
-	*****Sortie : /
-	*****Entraine : /
-	*************************************************/
+	/*!
+	 * Destructeur par défaut
+	 * 
+	 */
 	~CException();
 
-	//Accesseurs
-
-	/*************************************************
-	*****NOM : EXCLireErreur
-	**************************************************
-	*****Accesseur en lecture du code d'erreur
-	**************************************************
-	*****Entrée : /
-	*****Nécessite : /
-	*****Sortie : uErreur
-	*****Entraine : /
-	*************************************************/
+	
+	/*!
+	 * Accesseur en lecture du code d'erreur
+	 * 
+	 * \return Le code de l'erreur
+	 */
 	unsigned int EXCLireErreur(void);
 
-	/*************************************************
-	*****NOM : EXCModifierErreur
-	**************************************************
-	*****Accesseur en écriture du code d'erreur
-	**************************************************
-	*****Entrée : unsigned int uErreur le nouveau code d'erreur.
-	*****Nécessite : /
-	*****Sortie : IdErreur
-	*****Entraine : /
-	*************************************************/
+	
+	/*!
+	 * Accesseur en écriture du code d'erreur
+	 * 
+	 * \param uErreur Le code de l'erreur à attribuer à uEXCErreur
+	 */
 	void EXCModifierErreur(unsigned int uErreur);
 
-	/*************************************************
-	*****NOM : EXCAfficherMessageErreur
-	**************************************************
-	*****Affiche dans la sortie standard un message d'erreur approprié.
-	**************************************************
-	*****Entrée : idErreur
-	*****Nécessite : /
-	*****Sortie : /
-	*****Entraine : /
-	*************************************************/
+	
+	/*!
+	 * Affiche dans la sortie standard un message d'erreur approprié.
+	 * 
+	 */
 	void EXCAfficherMessageErreur(void);
 };
+
 #endif

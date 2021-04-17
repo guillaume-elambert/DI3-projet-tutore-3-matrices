@@ -1,14 +1,11 @@
 // Matrice.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
 
 #include <iostream>
+#include <Windows.h>
 #include "CMatrice.h"
-#include "CMatriceOperation.h"
 #include "CMatriceChargement.h"
 #include "CException.h"
-//#include "CStringUtil.h"
 #include "conio.h"
-
-//using namespace CMatriceOperation;
 
 
 
@@ -16,6 +13,11 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
+	// Set console code page to UTF-8 so console known how to interpret string data
+	SetConsoleOutputCP(CP_UTF8);
+
+	// Enable buffering to prevent VS from chopping up UTF-8 byte sequences
+	setvbuf(stdout, nullptr, _IOFBF, 1000);
 
 	//Creation d'une matrice avec le constructeur par défaut
 	try {
@@ -120,67 +122,8 @@ int main(int argc, char * argv[])
 	cout << endl;
 	cout << endl;
 
-	cout << "début de l'alogorithme demandé" << endl;
-
-	/*if (argc > 1) {
-		double dValeur = 0;
-		CMatrice<double> *pMATTableauMatrice = new CMatrice<double>[argc];
-		CMatrice<double> MATtmp;
-
-		CParser PARparser(argv[1]);
-
-		int iBoucle = 1;
-		for (iBoucle = 1; iBoucle < argc; iBoucle++) {
-			PARparser.PARLireFichier(argv[iBoucle]);
-			pMATTableauMatrice[iBoucle - 1] = CMatriceChargement::MACConversionChaineMatrice(PARparser.PARLire());
-			printf("Matrice du fichier : \"%s\"\n%s\n", argv[iBoucle], pMATTableauMatrice[iBoucle - 1].MATToString());
-		}
-		while (dValeur == 0) {
-			cout << "Entrer une valeur :" << endl;
-			cin >> dValeur;
-			cout << endl;
-		}
-		for (iBoucle = 0; iBoucle < argc; iBoucle++) {
-			printf("%s\n", CMatriceOperation<double>::MOPMultiplierMatriceEtConstante(pMATTableauMatrice[iBoucle], dValeur).MATToString());
-			cout << endl;
-		}
-		for (iBoucle = 0; iBoucle < argc; iBoucle++) {
-			printf("%s\n", CMatriceOperation<double>::MOPDiviserMatriceParConstante(pMATTableauMatrice[iBoucle], dValeur).MATToString());
-			cout << endl;
-		}
-		CMatrice<double> MATtemporaire(pMATTableauMatrice[0]);
-		for (iBoucle = 0; iBoucle < argc; iBoucle++) {
-			MATtemporaire = CMatriceOperation<double>::MOPAdditionnerMatrice(pMATTableauMatrice[iBoucle], MATtemporaire);
-		}
-		printf("%s\n", MATtemporaire.MATToString());
-		cout << endl;
-		for (iBoucle = 0; iBoucle < argc; iBoucle++) {
-			if (iBoucle % 2 == 0)
-				MATtemporaire = CMatriceOperation<double>::MOPAdditionnerMatrice(pMATTableauMatrice[iBoucle], MATtemporaire);
-			else
-				MATtemporaire = CMatriceOperation<double>::MOPSoustraireMatrice(MATtemporaire, pMATTableauMatrice[iBoucle]);
-		}
-		printf("%s\n", MATtemporaire.MATToString());
-		cout << endl;
-		for (iBoucle = 0; iBoucle < argc; iBoucle++) {
-			MATtemporaire = CMatriceOperation<double>::MOPMultiplierMatrice(MATtemporaire, pMATTableauMatrice[iBoucle]);
-		}
-		printf("%s\n", MATtemporaire.MATToString());
-		cout << endl;
-
-		/*for (iBoucle = 0; iBoucle < argc; ++iBoucle) {
-			delete pMATTableauMatrice[iBoucle];
-		}
-		delete[] pMATTableauMatrice;
-	}
-	else if (argc == 0)
-		cout << "Pas d'arguments.";
-	else
-		cout << "Dépassement de la taille maximale de fichier lisible.";*/
-
 	try {
-		cout << "Matrice1 * 5 :" << endl;
-		printf("%s\n", CMatriceOperation<double>::MOPMultiplierMatriceEtConstante(MATTableau1, 5).MATToString());
+		cout << "Matrice1 * 5 :" << endl << (MATTableau1 * 5).MATToString() << endl;
 		cout << endl;
 	}
 	catch (CException EXCLevee)
@@ -189,8 +132,7 @@ int main(int argc, char * argv[])
 	}
 
 	try {
-		cout << "5 * Matrice1 :" << endl;
-		printf("%s\n", CMatriceOperation<double>::MOPMultiplierMatriceEtConstante(5, MATTableau1).MATToString());
+		cout << "Matrice1 / 2 :" << endl << (MATTableau1 / 2).MATToString() << endl;
 		cout << endl;
 	}
 	catch (CException EXCLevee)
@@ -199,8 +141,7 @@ int main(int argc, char * argv[])
 	}
 
 	try {
-		cout << "5 * Matrice1 :" << endl;
-		printf("%s\n", CMatriceOperation<double>::MOPMultiplierMatriceEtConstante(5, MATTableau1).MATToString());
+		cout << "Matrice1 * Matrice2 :" << endl << (MATTableau1 * MATTableau2).MATToString() << endl;
 		cout << endl;
 	}
 	catch (CException EXCLevee)
@@ -209,8 +150,7 @@ int main(int argc, char * argv[])
 	}
 
 	try {
-		cout << "Matrice1 / 2 :" << endl;
-		printf("%s\n", CMatriceOperation<double>::MOPDiviserMatriceParConstante(MATTableau1, 2).MATToString());
+		cout << "Matrice1 * Matrice3 :" << endl << (MATTableau1, MATTableau3).MATToString() << endl;
 		cout << endl;
 	}
 	catch (CException EXCLevee)
@@ -219,37 +159,9 @@ int main(int argc, char * argv[])
 	}
 
 	try {
-		cout << "Matrice1 * Matrice2 :" << endl;
-
-		printf("%s\n", (MATTableau1 * MATTableau2).MATToString());
-		MATTableau1 *= MATTableau2;
-		printf("%s\n", (MATTableau1).MATToString());
-		//printf("%s\n", (MATTableau2 * MATTableau1).MATToString());
-		printf("Verif : \n%s\n", CMatriceOperation<double>::MOPMultiplierMatrice(MATTableau1, MATTableau2).MATToString());
-		cout << endl;
-	}
-	catch (CException EXCLevee)
-	{
-		EXCLevee.EXCAfficherMessageErreur();
-	}
-
-	try {
-		cout << "Matrice1 * Matrice3 :" << endl;
-		printf("%s\n", CMatriceOperation<double>::MOPMultiplierMatrice(MATTableau1, MATTableau3).MATToString());
-		cout << endl;
-	}
-	catch (CException EXCLevee)
-	{
-		EXCLevee.EXCAfficherMessageErreur();
-	}
-
-	try {
-		cout << "Matrice1 + Matrice3 :" << endl;
 		MATTableau1 = CMatrice<double>(3, 4, ppdTableau1);
-		printf("%s\n", (MATTableau1 + MATTableau3).MATToString());
-		MATTableau1 += MATTableau3;
-		printf("+=\n%s\n", MATTableau1.MATToString());
-		printf("%s\n", CMatriceOperation<double>::MOPAdditionnerMatrice(MATTableau1, MATTableau3).MATToString());
+
+		cout << "Matrice1 + Matrice3 :" << endl << (MATTableau1 + MATTableau3).MATToString() << endl;
 		cout << endl;
 	}
 	catch (CException EXCLevee)
@@ -258,8 +170,7 @@ int main(int argc, char * argv[])
 	}
 
 	try {
-		cout << "Matrice1 + Matrice2 :" << endl;
-		printf("%s\n", CMatriceOperation<double>::MOPAdditionnerMatrice(MATTableau1, MATTableau2).MATToString());
+		cout << "Matrice1 + Matrice2 :" << endl << (MATTableau1, MATTableau2).MATToString() << endl;
 		cout << endl;
 	}
 	catch (CException EXCLevee)
@@ -268,14 +179,102 @@ int main(int argc, char * argv[])
 	}
 
 	try {
-		cout << "Transposee Matrice2 :" << endl;
-		printf("%s\n", CMatriceOperation<double>::MOPTransposeeMatrice(MATTableau2).MATToString());
+		printf("Matrice 2 :\n%s\nTransposée matrice 2: \n%s\n", MATTableau2.MATToString(), MATTableau2.MATransposeeMatrice().MATToString());
 		cout << endl;
 	}
 	catch (CException EXCLevee)
 	{
 		EXCLevee.EXCAfficherMessageErreur();
 	}
+
+	cout << endl << "Début de l'algorithme demandé" << endl << endl;
+
+	//Entrée : au moins 1 nom de fichier est passé en paramètre
+	if (argc > 1) {
+		try {
+			double dValeur = 0;
+			int iNbMatrices = argc - 1;
+			CMatrice<double> *pMATTableauMatrice = new CMatrice<double>[iNbMatrices];
+			CMatrice<double> MATtmp;
+
+			CParser PARparser(argv[1]);
+
+			int iBoucle;
+
+			//Boucle de création des matrices
+			for (iBoucle = 0; iBoucle < iNbMatrices; iBoucle++) {
+				PARparser.PARLireFichier(argv[iBoucle + 1]);
+				pMATTableauMatrice[iBoucle] = CMatriceChargement::MACConversionChaineMatrice(PARparser.PARLire());
+				printf("Matrice %d (fichier \"%s\") :\n%s\n", iBoucle + 1, argv[iBoucle + 1], pMATTableauMatrice[iBoucle].MATToString());
+			}
+
+			//Saisie de la valeur
+			while (dValeur == 0) {
+				cout << "Entrer une valeur :" << endl;
+				cin >> dValeur;
+				cout << endl;
+			}
+
+
+			//Boucle de multiplication des matrices par le scalaire saisi
+			for (iBoucle = 0; iBoucle < iNbMatrices; iBoucle++) {
+
+				printf("Mutliplication matrice %d par %lf :\n%s\n", iBoucle + 1, dValeur, (pMATTableauMatrice[iBoucle] * dValeur).MATToString());
+				cout << endl;
+			}
+
+
+			//Boucle de division des matrices par le scalaire saisi
+			for (iBoucle = 0; iBoucle < iNbMatrices; iBoucle++) {
+				printf("Division matrice %d par %lf :\n%s\n", iBoucle + 1, dValeur, (pMATTableauMatrice[iBoucle] / dValeur).MATToString());
+				cout << endl;
+			}
+
+			//Entrée : plusieurs fichiers ont été passés en paramètre 
+			if (iNbMatrices > 1) {
+				CMatrice<double> MATtemporaire(pMATTableauMatrice[0]);
+
+				//Boucle d'addition des matrices entre elles
+				for (iBoucle = 1; iBoucle < iNbMatrices; iBoucle++) {
+					MATtemporaire += pMATTableauMatrice[iBoucle];
+				}
+				printf("Résultat de l'addition des %d matrices :\n%s\n", iNbMatrices, MATtemporaire.MATToString());
+				cout << endl;
+
+				MATtemporaire = pMATTableauMatrice[0];
+
+				//Boucle d'addition et soustration des matrices en elles
+				//Càd : M1-M2+M3-M4+M5-M6+...
+				for (iBoucle = 1; iBoucle < iNbMatrices; iBoucle++) {
+					if (iBoucle % 2 == 0) {
+						MATtemporaire += pMATTableauMatrice[iBoucle];
+					}
+					else {
+						MATtemporaire -= pMATTableauMatrice[iBoucle];
+					}
+				}
+				printf("Résultat de M1-M2+M3-M4+M5-M6+... :\n%s\n", MATtemporaire.MATToString());
+				cout << endl;
+
+				MATtemporaire = pMATTableauMatrice[0];
+
+				//Boucle de multiplication des matrices entre elles
+				for (iBoucle = 1; iBoucle < iNbMatrices; iBoucle++) {
+					MATtemporaire *= pMATTableauMatrice[iBoucle];
+				}
+
+				printf("Résultat de la multiplication des %d matrices :\n%s\n", iNbMatrices, MATtemporaire.MATToString());
+				cout << endl;
+			}
+		}
+		catch (CException EXCLevee) {
+			EXCLevee.EXCAfficherMessageErreur();
+		}
+	}
+	else {
+		cout << "Il faut passer au moins 1 fichier en argument" << endl;
+	}
+
 	cout << "Appuyez sur une touche pour fermer" << endl;
 	_getch();
 }

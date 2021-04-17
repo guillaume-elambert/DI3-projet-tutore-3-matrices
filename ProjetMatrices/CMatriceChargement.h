@@ -21,28 +21,22 @@ class CMatriceChargement
 {
 public:
 
-	/*************************************************
-	*****NOM : MACConversionChaineMatrice
-	**************************************************
-	*****Charge une matrice depuis un fichier
-	**************************************************
-	*****Entrée : sChemin, le chemin du fichier.
-	*****Nécessite : sChemin != null
-	*****Sortie : Un objet CMatrice initialisé à partir d'un fichier.
-	*****Entraine : /
-	*************************************************/
+	/*!
+	 * Charge une matrice depuis un fichier
+	 *
+	 * \param sChemin Le chemin vers le fichier
+	 * \pre sChemin != null
+	 * \return Un objet CMatrice initialisé à partir d'un fichier.
+	 */
 	static CMatrice<double>& MACChargerMatriceFichier(const char* sChemin);
 
-	/*************************************************
-	*****NOM : MACConversionChaineMatrice
-	**************************************************
-	*****Charge une matrice depuis une chaine
-	**************************************************
-	*****Entrée : sChaine, la chaine à convertir
-	*****Nécessite : sChaine != null
-	*****Sortie : Un objet CMatrice initialisé à partir d'une chaine.
-	*****Entraine : /
-	*************************************************/
+	/*!
+	 * Charge une matrice depuis une chaine
+	 *
+	 * \param sChaine La chaine à convertir en matrice
+	 * \pre sChaine != null
+	 * \return Un objet CMatrice initialisé à partir de la chaîne de caractères.
+	 */
 	static CMatrice<double>& MACConversionChaineMatrice(const char* sChaine);
 };
 
