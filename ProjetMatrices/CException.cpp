@@ -86,39 +86,35 @@ void CException::EXCAfficherMessageErreur(void)
 
 
 		/*CMatriceChargement*/
-	case 20: //RegexVide
-		cerr << "Impossible d'obtenir l'expression régulière.";
-		break;
-
-	case 21: //ChaineNulle
+	case 20: //ChaineNulle
 		cerr << "Il est nécessaire de passer un chemin";
 		break;
 
-	case 22: //SyntaxeTypeInvalide
+	case 21: //SyntaxeTypeInvalide
 		cerr << "La ligne contenant le type de la matrice ne correspond pas à l'expression régulière attendue";
 		break;
 
-	case 23: //SyntaxeLignesInvalide
+	case 22: //SyntaxeLignesInvalide
 		cerr << "La ligne contenant le nombre de lignes de la matrice ne correspond pas à l'expression régulière attendue";
 		break;
 
-	case 24: //SyntaxeColonnesInvalide
+	case 23: //SyntaxeColonnesInvalide
 		cerr << "La ligne contenant le nombre de colonnes de la matrice ne correspond pas à l'expression régulière attendue";
 		break;
 
-	case 25: //SyntaxeDelimiteursInvalide
+	case 24: //SyntaxeDelimiteursInvalide
 		cerr << "Les délimiteurs de l'initialisation des valeurs de la matrice ne correspondent pas à l'expression régulière attendue";
 		break;
 
-	case 26: //TypeInvalide
+	case 25: //TypeInvalide
 		cerr << "Le type défini n'est pas valide";
 		break;
 
-	case 27: //DimensionLignesInvalide
+	case 26: //DimensionLignesInvalide
 		cerr << "Le nombre de lignes obtenu est différent de celui qui a été défini";
 		break;
 
-	case 28: //DimensionColonnesInvalide
+	case 27: //DimensionColonnesInvalide
 		cerr << "Le nombre de colonnes obtenu est différent de celui qui a été défini";
 		break;
 

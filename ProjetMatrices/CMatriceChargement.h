@@ -5,17 +5,16 @@
 #include "CException.h"
 #include "CParser.h"
 
-#define RegexVide 20
-#define ChaineNulle 21
+#define ChaineNulle 20
 
-#define SyntaxeTypeInvalide 22
-#define SyntaxeLignesInvalide 23
-#define SyntaxeColonnesInvalide 24
-#define SyntaxeDelimiteursInvalide 25
+#define SyntaxeTypeInvalide 21
+#define SyntaxeLignesInvalide 22
+#define SyntaxeColonnesInvalide 23
+#define SyntaxeDelimiteursInvalide 24
 
-#define TypeInvalide 26
-#define DimensionLignesInvalide 27
-#define DimensionColonnesInvalide 28
+#define TypeInvalide 25
+#define DimensionLignesInvalide 26
+#define DimensionColonnesInvalide 27
 
 class CMatriceChargement
 {
